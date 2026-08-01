@@ -219,12 +219,12 @@ public:
         {
             admins.push_back(newAdmin);
 		}
-        
+
     }
 
     bool removeParticipant(const string& admin, const string& userToRemove) {
         // TODO: Implement remove participant
-       
+
         if (isAdmin(admin))
         {
             if (isParticipant(userToRemove))
@@ -292,10 +292,10 @@ public:
             cout << admins[i] << " ";
 		}
         cout<<"Messages:";
-        for (int i = 0; i < messages.size(); i++) 
+        for (int i = 0; i < messages.size(); i++)
         {
            messages[i].display();
-        }*/   
+        }*/
     }
 
     void sendJoinRequest(const string& username) {
@@ -324,7 +324,7 @@ private:
 
     bool isLoggedIn() const {
         // TODO: Implement login check
-        return false;
+        return currentUserIndex != -1;
     }
 
     string getCurrentUsername() const {
@@ -345,14 +345,82 @@ public:
 
     void startPrivateChat() {
         // TODO: Implement private chat creation
+
+        string username;
+
+        cout << "Enter username to start chatting with: ";
+        cin >> username;
+
+        if (findUserIndex(username) == -1) {
+            cout << "User not found.\n";
+            return;
+        }
+
+        if (username == getCurrentUsername()) {
+            cout << "You cannot create a chat with yourself.\n";
+            return;
+        }
+
+        Chat* newChat = new PrivateChat(getCurrentUsername(), username);
+        chats.push_back(newChat);
+
+        cout << "Private chat created successfully.\n";
     }
 
     void createGroup() {
         // TODO: Implement group creation
+
+        string groupName;
+        int numberOfParticipants;
+
+        cout << "Enter group name: ";
+        cin >> groupName;
+
+        cout << "Enter number of participants: ";
+        cin >> numberOfParticipants;
+
+        if (numberOfParticipants < 2) {
+            cout << "A group must have at least 2 participants.\n";
+            return;
+        }
+
+        vector<string> participants;
+        participants.push_back(getCurrentUsername());
+
+        for (int i = 0; i < numberOfParticipants; i++) {
+            string username;
+
+            cout << "Enter participant " << i + 1 << ": ";
+            cin >> username;
+
+            if (findUserIndex(username) == -1) {
+                cout << "User " << username << " does not exist.\n";
+                continue;
+            }
+
+            participants.push_back(username);
+        }
+
+        Chat* newGroup = new GroupChat(participants, groupName, getCurrentUsername());
+        chats.push_back(newGroup);
+
+        cout << "Group created successfully.\n";
     }
 
     void viewChats() const {
         // TODO: Implement chat viewing
+
+        if (chats.empty()) {
+            cout << "No chats available.\n";
+            return;
+        }
+
+        cout << "\n===== Chats =====\n";
+
+        for (int i = 0; i < chats.size(); i++) {
+            cout << "\nChat " << i + 1 << ":\n";
+            chats[i]->displayChat();
+        }
     }
 
     void logout() {
@@ -363,22 +431,45 @@ public:
         while (true) {
             if (!isLoggedIn()) {
                 cout << "\n1. Login\n2. Sign Up\n3. Exit\nChoice: ";
+
                 int choice;
                 cin >> choice;
 
-                if (choice == 1) login();
-                else if (choice == 2) signUp();
-                else if (choice == 3) break;
+                if (choice == 1) {
+                    login();
+                }
+                else if (choice == 2) {
+                    signUp();
+                }
+                else if (choice == 3) {
+                    cout << "Exiting WhatsApp...\n";
+                    break;
+                }
+                else {
+                    cout << "Invalid choice.\n";
+                }
             }
             else {
                 cout << "\n1. Start Private Chat\n2. Create Group\n3. View Chats\n4. Logout\nChoice: ";
+
                 int choice;
                 cin >> choice;
 
-                if (choice == 1) startPrivateChat();
-                else if (choice == 2) createGroup();
-                else if (choice == 3) viewChats();
-                else if (choice == 4) logout();
+                if (choice == 1) {
+                    startPrivateChat();
+                }
+                else if (choice == 2) {
+                    createGroup();
+                }
+                else if (choice == 3) {
+                    viewChats();
+                }
+                else if (choice == 4) {
+                    logout();
+                }
+                else {
+                    cout << "Invalid choice.\n";
+                }
             }
         }
     }
