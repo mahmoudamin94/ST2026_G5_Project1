@@ -195,7 +195,7 @@ public:
         }
 
         return result;
-        
+
     }
 
     void exportToFile(const string& filename) const {
@@ -349,6 +349,13 @@ private:
 
     int findUserIndex(string username) const {
         // TODO: Implement user search
+        for (int i=0; i<users.size(); i++)
+        {
+            if (users[i].getUsername() == username)
+            {
+                return i;
+            }
+        }
         return -1;
     }
 
@@ -359,7 +366,11 @@ private:
 
     string getCurrentUsername() const {
         // TODO: Implement get current user
-        return "";
+        if (!isLoggedIn())
+        {
+            return "";
+        }
+        return users[currentUserIndex].getUsername();
     }
 
 public:
@@ -367,10 +378,63 @@ public:
 
     void signUp() {
         // TODO: Implement user registration
+        string username;
+        string password;
+        string phoneNumber;
+
+        cout << "Enter username: ";
+        cin >> username;
+
+        if (findUserIndex(username) != -1)
+        {
+            cout << "Username already exists!\n";
+            return;
+        }
+        else {
+        cout << "Enter password: ";
+        cin >> password;
+
+        cout << "Enter phone number: ";
+        cin >> phoneNumber;
+
+        User newUser(username, password, phoneNumber);
+        users.push_back(newUser);
+
+        cout << "Registration Successful";
+         }
+
     }
 
     void login() {
         // TODO: Implement user login
+        string username;
+        cout << "Enter username: ";
+        cin >> username;
+
+        int index = findUserIndex(username);
+        if (index == -1)
+        {
+            cout << "Invalid username!\n";
+            return;
+        }
+
+         string password;
+         cout << "Enter password: ";
+         cin >> password;
+
+         if(users[index].checkPassword(password))
+         {
+             currentUserIndex = index;
+             cout << "Login Successful!\n";
+         }
+         else
+         {
+             cout << "Incorrect password!\n";
+         }
+
+
+
+
     }
 
     void startPrivateChat() {
@@ -455,6 +519,8 @@ public:
 
     void logout() {
         // TODO: Implement logout
+        currentUserIndex = -1;
+        cout << "Logged out successfully!\n";
     }
 
     void run() {
