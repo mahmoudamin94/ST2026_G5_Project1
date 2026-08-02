@@ -154,21 +154,48 @@ public:
     }
 
     void addMessage(const Message& msg) {
-        // TODO: Implement message addition
+        messages.push_back(msg);
     }
 
     bool deleteMessage(int index, const string& username) {
-        // TODO: Implement message deletion
-        return false;
+        if (index < 0 || index >= messages.size())
+            return false;
+
+        if (messages[index].getSender() != username)
+            return false;
+
+        messages.erase(messages.begin() + index);
+        return true;
     }
 
     virtual void displayChat() const {
-        // TODO: Implement chat display
+        cout << "Chat Name: " << chatName << endl;
+        cout << "Participants: ";
+
+        for (int i = 0; i < participants.size(); i++) {
+            cout << participants[i];
+
+            if (i != participants.size() - 1)
+                cout << ", ";
+        }
+        cout << endl << endl;
+
+        for (int i = 0; i < messages.size(); i++) {
+            messages[i].display();
+        }
     }
 
     vector<Message> searchMessages(string keyword) const {
-        // TODO: Implement message search
-        return {};
+        vector<Message> result;
+
+        for (int i = 0; i < messages.size(); i++) {
+
+            if (messages[i].getContent().find(keyword) != string::npos)
+                result.push_back(messages[i]);
+        }
+
+        return result;
+        
     }
 
     void exportToFile(const string& filename) const {
