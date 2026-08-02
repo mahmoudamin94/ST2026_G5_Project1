@@ -143,11 +143,14 @@ protected:
 
 public:
     Chat() {
-        // TODO: Implement default constructor
+        participants.clear();
+        messages.clear();
+        chatName = "";
     }
 
     Chat(vector<string> users, string name) {
-        // TODO: Implement parameterized constructor
+		participants = users;
+		chatName = name;
     }
 
     void addMessage(const Message& msg) {
