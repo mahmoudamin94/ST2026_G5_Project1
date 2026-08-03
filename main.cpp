@@ -241,6 +241,7 @@ public:
                                 if (admins[i] == userToRemove)
                                 {
                                     admins.erase(admins.begin() + i);
+                                    return true;
                                 }
                             }
                         }
@@ -284,26 +285,30 @@ public:
 
     void displayChat() const override {
         // TODO: Implement group chat display
-		/*cout << "Group Name: " << chatName << endl;
-		cout << "Description: " << description << endl;
-        cout << "Admins:";
-        for(int i=0; i<admins.size(); i++)
+        cout << "Group Name: " << chatName << endl;
+        cout << "Description: " << description << endl;
+        cout << "Admins: ";
+        for (int i = 0; i < admins.size(); i++)
         {
-            cout << admins[i] << " ";
-		}
-        cout<<"Messages:";
-        for (int i = 0; i < messages.size(); i++) 
+            cout << admins[i];
+            if (i != admins.size() - 1)
+            {
+                cout << ", ";
+            }
+        }
+        cout << "\nMessages: ";
+        for (int i = 0; i < messages.size(); i++)
         {
-           messages[i].display();
-        }*/   
+            messages[i].display();
+        }
     }
 
     void sendJoinRequest(const string& username) {
         // TODO: Implement join request
-        if(!isParticipant(username))
+        if (!isParticipant(username))
         {
-            cout << username << "request to join" << endl;
-		}
+            cout << username << " request to join" << endl;
+        }
 
     }
 };
