@@ -17,52 +17,61 @@ private:
 
 public:
     User() {
-        // TODO: Implement default constructor
+        username = "";
+        password = "";
+        phoneNumber = "";
+        status = "";
+        lastSeen = to_string(time(nullptr));
     }
 
     User(string uname, string pwd, string phone) {
-        // TODO: Implement parameterized constructor
+        username = uname;
+        password = pwd;
+        phoneNumber = phone;
+        status = "online";
+        lastSeen = to_string(time(nullptr));
     }
 
     string getUsername() const {
-        // TODO: Implement getter
-        return "";
+        return username;
     }
 
     string getPhoneNumber() const {
-        // TODO: Implement getter
-        return "";
+        return phoneNumber;
     }
 
     string getStatus() const {
-        // TODO: Implement getter
-        return "";
+        return status;
     }
 
     string getLastSeen() const {
-        // TODO: Implement getter
-        return "";
+        return lastSeen;
     }
 
     void setStatus(string newStatus) {
-        // TODO: Implement setter
+        status = newStatus;
     }
 
     void setPhoneNumber(string phone) {
-        // TODO: Implement setter
+        phoneNumber = phone;
     }
 
     void updateLastSeen() {
-        // TODO: Implement last seen update
+        lastSeen = to_string(time(nullptr));
     }
 
     bool checkPassword(string pwd) const {
-        // TODO: Implement password check
+        if (password == pwd)
+            return true;
         return false;
     }
 
     void changePassword(string newPwd) {
-        // TODO: Implement password change
+        if (newPwd.length() < 6) {
+            cout<< "password must be at least 6 characters"<<endl;
+            return;
+        }
+        password = newPwd;
     }
 };
 
