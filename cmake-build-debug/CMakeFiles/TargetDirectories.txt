@@ -1,3 +1,0 @@
-C:/Users/Norhan Yasser/ST2026_G5_Project1/cmake-build-debug/CMakeFiles/ST2026_G5_Project1.dir
-C:/Users/Norhan Yasser/ST2026_G5_Project1/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/Norhan Yasser/ST2026_G5_Project1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
